@@ -67,6 +67,15 @@ function ladeLevel5C() {
   ];
 }
 
+function ladeLevel6C() {
+  level6C = [
+    new Coin(100, 100, 40, false),
+    new Coin(430, 100, 40, false),
+    new Coin(400, 540, 40, false),
+    new Coin(70, 350, 40, false),
+  ];
+}
+
 function ladeLevel2H() {
   hinder1 = new Hinderniss(450, 170, 40, 5);
   append(level2H, hinder1);

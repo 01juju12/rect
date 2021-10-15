@@ -15,6 +15,7 @@ function setup() {
   ladeLevel3C();
   ladeLevel4C();
   ladeLevel5C();
+  ladeLevel6C();
   ladeLevel2H();
   wand1 = new Wall(300, 150, 30, 250, false);
 }
@@ -60,6 +61,14 @@ function draw() {
           if (level3C[j].e) {
             player1.score--;
             level3C[j].e = false;
+          }
+        }
+      }
+      if (level == 6) {
+        for (j = 0; j < level6C.length; j++) {
+          if (level6C[j].e) {
+            player1.score--;
+            level6C[j].e = false;
           }
         }
       }
@@ -120,6 +129,13 @@ function draw() {
     }
   }
   
+  if (level == 6) {
+    for (j = 0; j < level6C.length; j++) {
+      level6C[j].draw();
+    }
+  }
+
+  
   coinB.draw1();
   fill("black");
   triangle(400, 230, 430, 200, 460, 230);
@@ -137,7 +153,9 @@ function draw() {
   text("Tode: " + death + "", 50, 550);
   player1.sterbenL2();
   player1.verloren();
-  if (player1.score == 20){
+  if (player1.score == 24){
+    player1.x = 250;
+    player1.y = 300;
     fill("LightBlue");
     rect(0, 0, 600, 600);
     textSize(55);
@@ -220,6 +238,23 @@ function pruefe() {
       player1.x = 250;
       level = 5;
       player1.h += 50;
+    }
+  }
+  if (player1.score >= 20 && player1.score < 24) {
+    let compleet = true;
+    for (j = 0; j < level5C.length; j++) {
+      if (!level5C[j].e) {
+        compleet = false;
+      }
+    }
+
+    if (compleet == true) {
+      for (j = 0; j < level5C.length; j++) {
+        level5C[j].e = false;
+      }
+      player1.y = 300;
+      player1.x = 250;
+      level = 6;
     }
   }
 }

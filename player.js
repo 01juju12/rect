@@ -81,6 +81,22 @@ class Player {
         }
       }
     }
+    if (level == 6) {
+      for (let i = 0; i < level6C.length; i++) {
+        let c = level6C[i];
+        if (
+          this.x < c.x + c.r * 0.5 &&
+          this.x + this.b > c.x - c.r * 0.5 &&
+          this.y < c.y + c.r * 0.5 &&
+          this.y + this.h > c.y - c.r * 0.5
+        ) {
+          if (!c.e) {
+            this.score++;
+            c.e = true;
+          }
+        }
+      }
+    }
     if (level == 5) {
       if (
         this.x < coinB.x + coinB.r * 0.5 &&
@@ -214,53 +230,64 @@ class Player {
   }
 
   move() {
-    if (this.colL == false) {
-      if (keyIsDown(LEFT_ARROW)) {
-        this.x -= 1;
-      } else {
-        if (level == 3) {
-          this.x--;
+    if (level != 6) {
+      if (this.colL == false) {
+        if (keyIsDown(LEFT_ARROW)) {
+          this.x -= 1;
+        } else {
+          if (level == 3) {
+            this.x--;
+          }
         }
       }
-    }
-    if (this.colR == false) {
-      if (keyIsDown(RIGHT_ARROW)) {
-        if (level == 3) {
+      if (this.colR == false) {
+        if (keyIsDown(RIGHT_ARROW)) {
+          if (level == 3) {
+            this.x += 1;
+          }
           this.x += 1;
         }
-        this.x += 1;
+      }
+    } else {
+      if (this.score != 24) {
+        if (mouseIsPressed) {
+          this.x = mouseX;
+          this.y = mouseY;
+        }
       }
     }
   }
 
   climb() {
-    for (let i = 0; i < wand.length; i++) {
-      let w = wand[i];
-      if (
-        this.x < w.x + w.b &&
-        this.x + this.b > w.x &&
-        this.y < w.y + w.h &&
-        this.y + this.h > w.y
-      ) {
-        if (w.cl == true) {
-          this.colC = true;
-          zeit = 70;
+    if (level != 6) {
+      for (let i = 0; i < wand.length; i++) {
+        let w = wand[i];
+        if (
+          this.x < w.x + w.b &&
+          this.x + this.b > w.x &&
+          this.y < w.y + w.h &&
+          this.y + this.h > w.y
+        ) {
+          if (w.cl == true) {
+            this.colC = true;
+            zeit = 70;
+          }
         }
       }
-    }
-    if (this.colC || zeit < 70) {
-      if (!this.colO) {
-        if (keyIsDown(UP_ARROW)) {
-          this.y -= 2;
-          zeit++;
+      if (this.colC || zeit < 70) {
+        if (!this.colO) {
+          if (keyIsDown(UP_ARROW)) {
+            this.y -= 2;
+            zeit++;
+          } else {
+            zeit = 70;
+          }
         } else {
           zeit = 70;
         }
-      } else {
-        zeit = 70;
       }
+      this.colC = false;
     }
-    this.colC = false;
   }
 
   fall() {
